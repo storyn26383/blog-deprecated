@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\Debug\Exception\FlattenException;
 
 class Handler extends ExceptionHandler
 {
@@ -61,5 +62,22 @@ class Handler extends ExceptionHandler
         }
 
         return redirect()->guest('login');
+    }
+
+    /**
+     * Create a Symfony response for the given exception.
+     *
+     * @param  \Exception  $e
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    protected function convertExceptionToResponse(Exception $e)
+    {
+        $e = FlattenException::create($e);
+
+        if (request()->expectsJson()) {
+            return response()->json(['error' => $e->getMessage()], $e->getStatusCode());
+        }
+
+        return parent::convertExceptionToResponse($e->getPrevious());
     }
 }
