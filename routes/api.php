@@ -29,4 +29,10 @@ Route::group([
     Route::put('tag/{tag}', 'TagController@update');
     Route::delete('tag/{tag}', 'TagController@destroy');
     Route::get('tags', 'TagController@index');
+
+    Route::post('post', 'PostController@store');
+    Route::get('post/{post}', 'PostController@show');
+    Route::put('post/{post}', 'PostController@update');
+    Route::delete('post/{post}', 'PostController@destroy');
+    Route::get('posts', 'PostController@index');
 });
