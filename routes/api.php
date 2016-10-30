@@ -23,4 +23,10 @@ Route::group([
     Route::put('category/{category}', 'CategoryController@update');
     Route::delete('category/{category}', 'CategoryController@destroy');
     Route::get('categories', 'CategoryController@index');
+
+    Route::post('tag', 'TagController@store');
+    Route::get('tag/{tag}', 'TagController@show');
+    Route::put('tag/{tag}', 'TagController@update');
+    Route::delete('tag/{tag}', 'TagController@destroy');
+    Route::get('tags', 'TagController@index');
 });
