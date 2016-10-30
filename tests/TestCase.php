@@ -2,8 +2,15 @@
 
 namespace Tests;
 
+use App\User;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+
 abstract class TestCase extends \Illuminate\Foundation\Testing\TestCase
 {
+    use DatabaseMigrations;
+
+    protected $user;
+
     /**
      * The base URL to use while testing the application.
      *
@@ -23,5 +30,12 @@ abstract class TestCase extends \Illuminate\Foundation\Testing\TestCase
         $app->make(\Illuminate\Contracts\Console\Kernel::class)->bootstrap();
 
         return $app;
+    }
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->user = factory(User::class)->create();
     }
 }

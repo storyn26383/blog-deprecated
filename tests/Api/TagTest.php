@@ -3,24 +3,9 @@
 namespace Tests;
 
 use App\Tag;
-use App\User;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class TagTest extends TestCase
 {
-    use DatabaseMigrations;
-
-    protected $user;
-
-    public function setUp()
-    {
-        parent::setUp();
-
-        $this->user = factory(User::class)->create();
-    }
-
     public function testCreate()
     {
         $this->json(
