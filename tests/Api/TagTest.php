@@ -62,7 +62,7 @@ class TagTest extends TestCase
 
         $this->json(
             'DELETE',
-            'api/v1/tag/1',
+            "api/v1/tag/{$tag->id}",
             [],
             ['Authorization' => "Bearer {$this->user->api_token}"]
         );

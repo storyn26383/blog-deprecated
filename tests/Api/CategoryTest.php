@@ -65,7 +65,7 @@ class CategoryTest extends TestCase
 
         $this->json(
             'DELETE',
-            'api/v1/category/1',
+            "api/v1/category/{$category->id}",
             [],
             ['Authorization' => "Bearer {$this->user->api_token}"]
         );
