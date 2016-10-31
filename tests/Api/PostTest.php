@@ -24,10 +24,7 @@ class PostTest extends TestCase
 
     public function testRead()
     {
-        $post = Post::create([
-            'title' => 'foo',
-            'content' => 'bar',
-        ]);
+        $post = factory(Post::class)->create();
 
         $this->json(
             'GET',
@@ -41,29 +38,23 @@ class PostTest extends TestCase
 
     public function testUpdate()
     {
-        $post = Post::create([
-            'title' => 'foo',
-            'content' => 'bar',
-        ]);
+        $post = factory(Post::class)->create();
 
         $this->json(
             'PUT',
             "api/v1/post/{$post->id}",
-            ['content' => 'biz'],
+            ['content' => 'Hello World'],
             ['Authorization' => "Bearer {$this->user->api_token}"]
         );
 
         $this->seeJson(['success' => true]);
 
-        $this->assertEquals('biz', $post->fresh()->content);
+        $this->assertEquals('Hello World', $post->fresh()->content);
     }
 
     public function testDelete()
     {
-        $post = Post::create([
-            'title' => 'foo',
-            'content' => 'bar',
-        ]);
+        $post = factory(Post::class)->create();
 
         $this->json(
             'DELETE',
@@ -79,10 +70,7 @@ class PostTest extends TestCase
 
     public function testList()
     {
-        Post::create([
-            'title' => 'foo',
-            'content' => 'bar',
-        ]);
+        factory(Post::class, 3)->create();
 
         $this->json(
             'GET',

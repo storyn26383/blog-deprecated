@@ -22,10 +22,7 @@ class CategoryTest extends TestCase
 
     public function testRead()
     {
-        $category = Category::create([
-            'name' => 'foo',
-            'slug' => 'foo',
-        ]);
+        $category = factory(Category::class)->create();
 
         $this->json(
             'GET',
@@ -39,29 +36,23 @@ class CategoryTest extends TestCase
 
     public function testUpdate()
     {
-        $category = Category::create([
-            'name' => 'foo',
-            'slug' => 'foo',
-        ]);
+        $category = factory(Category::class)->create();
 
         $this->json(
             'PUT',
             "api/v1/category/{$category->id}",
-            ['slug' => 'bar'],
+            ['slug' => 'foo'],
             ['Authorization' => "Bearer {$this->user->api_token}"]
         );
 
         $this->seeJson(['success' => true]);
 
-        $this->assertEquals('bar', $category->fresh()->slug);
+        $this->assertEquals('foo', $category->fresh()->slug);
     }
 
     public function testDelete()
     {
-        $category = Category::create([
-            'name' => 'foo',
-            'slug' => 'foo',
-        ]);
+        $category = factory(Category::class)->create();
 
         $this->json(
             'DELETE',
@@ -77,10 +68,7 @@ class CategoryTest extends TestCase
 
     public function testList()
     {
-        Category::create([
-            'name' => 'foo',
-            'slug' => 'foo',
-        ]);
+        factory(Category::class, 3)->create();
 
         $this->json(
             'GET',

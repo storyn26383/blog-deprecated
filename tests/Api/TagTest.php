@@ -22,9 +22,7 @@ class TagTest extends TestCase
 
     public function testRead()
     {
-        $tag = Tag::create([
-            'name' => 'foo',
-        ]);
+        $tag = factory(Tag::class)->create();
 
         $this->json(
             'GET',
@@ -38,27 +36,23 @@ class TagTest extends TestCase
 
     public function testUpdate()
     {
-        $tag = Tag::create([
-            'name' => 'foo',
-        ]);
+        $tag = factory(Tag::class)->create();
 
         $this->json(
             'PUT',
             "api/v1/tag/{$tag->id}",
-            ['name' => 'bar'],
+            ['name' => 'foo'],
             ['Authorization' => "Bearer {$this->user->api_token}"]
         );
 
         $this->seeJson(['success' => true]);
 
-        $this->assertEquals('bar', $tag->fresh()->name);
+        $this->assertEquals('foo', $tag->fresh()->name);
     }
 
     public function testDelete()
     {
-        $tag = Tag::create([
-            'name' => 'foo',
-        ]);
+        $tag = factory(Tag::class)->create();
 
         $this->json(
             'DELETE',
@@ -74,9 +68,7 @@ class TagTest extends TestCase
 
     public function testList()
     {
-        Tag::create([
-            'name' => 'foo',
-        ]);
+        factory(Tag::class, 3)->create();
 
         $this->json(
             'GET',
