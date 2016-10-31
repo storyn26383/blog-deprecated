@@ -33,6 +33,10 @@ class PostController extends Controller
             $post->categories()->sync(explode(',', $request->categories));
         }
 
+        if ($request->has('tags')) {
+            $post->tags()->sync(explode(',', $request->tags));
+        }
+
         return ['id' => $post->id];
     }
 

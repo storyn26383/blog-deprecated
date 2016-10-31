@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Tag;
 use App\Post;
 use App\Category;
 
@@ -112,6 +113,28 @@ class PostTest extends TestCase
 
         $categories->each(function ($category) use (&$post) {
             $this->assertTrue($post->categories->contains($category));
+        });
+    }
+
+    public function testCreateWithTags()
+    {
+        $tags = factory(Tag::class, 3)->create();
+
+        $this->json(
+            'POST',
+            'api/v1/post',
+            [
+                'title' => 'foo',
+                'content' => 'bar',
+                'tags' => $tags->pluck('id')->implode(','),
+            ],
+            ['Authorization' => "Bearer {$this->user->api_token}"]
+        );
+
+        $post = Post::find($this->response->getOriginalContent()['id']);
+
+        $tags->each(function ($tag) use (&$post) {
+            $this->assertTrue($post->tags->contains($tag));
         });
     }
 }

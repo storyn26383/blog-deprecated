@@ -30,3 +30,9 @@ $factory->define(App\Category::class, function (Faker\Generator $faker) {
         'slug' => $word,
     ];
 });
+
+$factory->define(App\Tag::class, function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->word,
+    ];
+});
