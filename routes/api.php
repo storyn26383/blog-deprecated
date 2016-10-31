@@ -23,6 +23,7 @@ Route::group([
     Route::put('category/{category}', 'CategoryController@update');
     Route::delete('category/{category}', 'CategoryController@destroy');
     Route::get('categories', 'CategoryController@index');
+    Route::get('category/{category}/posts', 'CategoryController@posts');
 
     Route::post('tag', 'TagController@store');
     Route::get('tag/{tag}', 'TagController@show');

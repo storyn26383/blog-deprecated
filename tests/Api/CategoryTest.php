@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Post;
 use App\Category;
 
 class CategoryTest extends TestCase
@@ -78,5 +79,21 @@ class CategoryTest extends TestCase
         );
 
         $this->seeJsonStructure(['*' => ['name' , 'slug']]);
+    }
+
+    public function testPostsOfCategory()
+    {
+        $category = factory(Category::class)->create();
+
+        $category->posts()->sync(factory(Post::class, 3)->create());
+
+        $this->json(
+            'GET',
+            "api/v1/category/{$category->id}/posts",
+            [],
+            ['Authorization' => "Bearer {$this->user->api_token}"]
+        );
+
+        $this->seeJsonStructure(['*' => ['title' , 'content', 'categories', 'tags']]);
     }
 }

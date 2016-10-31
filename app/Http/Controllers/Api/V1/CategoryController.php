@@ -69,4 +69,9 @@ class CategoryController extends Controller
 
         return ['success' => true];
     }
+
+    public function posts(Category $category)
+    {
+        return $category->posts()->with('categories', 'tags')->get();
+    }
 }
