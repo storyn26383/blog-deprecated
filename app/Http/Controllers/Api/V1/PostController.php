@@ -29,6 +29,10 @@ class PostController extends Controller
     {
         $post = Post::create($request->all());
 
+        if ($request->has('categories')) {
+            $post->categories()->sync(explode(',', $request->categories));
+        }
+
         return ['id' => $post->id];
     }
 

@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Post;
+use App\Category;
 
 class PostTest extends TestCase
 {
@@ -90,5 +91,27 @@ class PostTest extends TestCase
         );
 
         $this->seeJsonStructure(['*' => ['title', 'content']]);
+    }
+
+    public function testCreateWithCategories()
+    {
+        $categories = factory(Category::class, 3)->create();
+
+        $this->json(
+            'POST',
+            'api/v1/post',
+            [
+                'title' => 'foo',
+                'content' => 'bar',
+                'categories' => $categories->pluck('id')->implode(','),
+            ],
+            ['Authorization' => "Bearer {$this->user->api_token}"]
+        );
+
+        $post = Post::find($this->response->getOriginalContent()['id']);
+
+        $categories->each(function ($category) use (&$post) {
+            $this->assertTrue($post->categories->contains($category));
+        });
     }
 }
