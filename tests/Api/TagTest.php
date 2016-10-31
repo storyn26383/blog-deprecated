@@ -3,6 +3,7 @@
 namespace Tests;
 
 use App\Tag;
+use App\Post;
 
 class TagTest extends TestCase
 {
@@ -78,5 +79,21 @@ class TagTest extends TestCase
         );
 
         $this->seeJsonStructure(['*' => ['name']]);
+    }
+
+    public function testPostsOfTag()
+    {
+        $tag = factory(Tag::class)->create();
+
+        $tag->posts()->sync(factory(Post::class, 3)->create());
+
+        $this->json(
+            'GET',
+            "api/v1/tag/{$tag->id}/posts",
+            [],
+            ['Authorization' => "Bearer {$this->user->api_token}"]
+        );
+
+        $this->seeJsonStructure(['*' => ['title' , 'content', 'categories', 'tags']]);
     }
 }

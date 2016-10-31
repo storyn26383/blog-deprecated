@@ -30,6 +30,7 @@ Route::group([
     Route::put('tag/{tag}', 'TagController@update');
     Route::delete('tag/{tag}', 'TagController@destroy');
     Route::get('tags', 'TagController@index');
+    Route::get('tag/{tag}/posts', 'TagController@posts');
 
     Route::post('post', 'PostController@store');
     Route::get('post/{post}', 'PostController@show');

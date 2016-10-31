@@ -69,4 +69,9 @@ class TagController extends Controller
 
         return ['success' => true];
     }
+
+    public function posts(Tag $tag)
+    {
+        return $tag->posts()->with('categories', 'tags')->get();
+    }
 }
