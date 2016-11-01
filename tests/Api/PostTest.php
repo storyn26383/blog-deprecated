@@ -85,6 +85,8 @@ class PostTest extends TestCase
                 '*' => [
                     'title',
                     'content',
+                    'categories',
+                    'tags',
                 ]
             ]
         ]);
