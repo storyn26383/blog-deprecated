@@ -78,7 +78,14 @@ class TagTest extends TestCase
             ['Authorization' => "Bearer {$this->user->api_token}"]
         );
 
-        $this->seeJsonStructure(['*' => ['name']]);
+        $this->seeJsonStructure([
+            'current_page',
+            'data' => [
+                '*' => [
+                    'name',
+                ]
+            ]
+        ]);
     }
 
     public function testPostsOfTag()

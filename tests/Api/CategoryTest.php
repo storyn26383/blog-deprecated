@@ -78,7 +78,15 @@ class CategoryTest extends TestCase
             ['Authorization' => "Bearer {$this->user->api_token}"]
         );
 
-        $this->seeJsonStructure(['*' => ['name' , 'slug']]);
+        $this->seeJsonStructure([
+            'current_page',
+            'data' => [
+                '*' => [
+                    'name',
+                    'slug',
+                ]
+            ]
+        ]);
     }
 
     public function testPostsOfCategory()

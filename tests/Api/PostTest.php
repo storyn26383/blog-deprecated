@@ -79,7 +79,15 @@ class PostTest extends TestCase
             ['Authorization' => "Bearer {$this->user->api_token}"]
         );
 
-        $this->seeJsonStructure(['*' => ['title', 'content']]);
+        $this->seeJsonStructure([
+            'current_page',
+            'data' => [
+                '*' => [
+                    'title',
+                    'content',
+                ]
+            ]
+        ]);
     }
 
     public function testCreateWithCategories()
